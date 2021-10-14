@@ -1,0 +1,10 @@
+numpy
+scipy>=1.3
+sympy>=1.5
+tqdm
+ase
+numba
+python==3.8
+jupyterlab
+tensorflow>=2.2
+tensorflow_addons>=0.11

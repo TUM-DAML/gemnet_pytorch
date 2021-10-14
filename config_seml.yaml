@@ -1,0 +1,92 @@
+
+seml:
+  executable: 'train_seml.py'
+  name: "gemnet"
+  output_dir: "slurm_logs"
+  conda_environment: 'pytorch'
+  project_root_dir: "/nfs/homedirs/beckerf/gemnet_torch/"
+
+slurm:
+  experiments_per_job: 1
+  sbatch_options:
+    gres: 'gpu:1'
+    mem: 40G
+    cpus-per-task: 2
+    time: 07-00:00
+    partition: gpu_all
+
+fixed:
+  num_spherical: 7
+  num_radial: 6
+  num_blocks: 4
+
+  emb_size_atom: 128
+  emb_size_edge: 128
+  emb_size_trip: 64 
+  emb_size_quad: 32 
+  emb_size_rbf: 16 
+  emb_size_cbf: 16  
+  emb_size_sbf: 32  
+  emb_size_bil_trip: 64
+  emb_size_bil_quad: 32
+
+  num_before_skip: 1
+  num_after_skip: 1
+  num_concat: 1
+  num_atom: 2
+  
+  cutoff: 5.0
+  int_cutoff: 10.0
+  
+  mve: False
+  loss: "rmse"
+  forces_coupled: False   
+  envelope_exponent: 5
+  extensive: True
+
+  rho_force: 0.999
+  ema_decay: 0.999
+  weight_decay: 0.000002
+
+  learning_rate: 0.001
+  decay_steps: 4500000
+  decay_rate: 0.01
+  staircase: False  
+  decay_patience: 5
+  decay_factor: 0.5
+  decay_cooldown: 5
+  agc: False
+  grad_clip_max: 10.0
+
+  restart: null
+  tfseed: 1234
+  data_seed: 42  
+  scale_file: "/nfs/homedirs/beckerf/gemnet_pytorch/scaling_factors.json"
+  comment: "GemNet"
+  output_init: "HeOrthogonal"
+
+  logdir: "/nfs/homedirs/beckerf/gemnet_pytorch/logging_coll/"
+  dataset: "/nfs/homedirs/beckerf/datasets/coll/coll_v1.2_train.npz"
+  val_dataset: "/nfs/homedirs/beckerf/datasets/coll/coll_v1.2_val.npz"
+  num_train: 0 # derived from dataset
+  num_val: 0 # derived from dataset
+
+  patience: 5 
+  evaluation_interval: 7500
+  save_interval: 7500
+  warmup_steps: 3750
+  batch_size: 32
+  num_steps: 1500000
+
+grid:
+  triplets_only:
+    type: choice
+    options:
+      - True
+      - False
+
+  direct_forces:
+    type: choice
+    options:
+      - True
+      - False
