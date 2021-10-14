@@ -6,5 +6,8 @@ ase
 numba
 python==3.8
 jupyterlab
-tensorflow>=2.2
-tensorflow_addons>=0.11
+pytorch==1.9.0
+torchvision 
+torchaudio 
+cudatoolkit=10.2
+pytorch-geometric
