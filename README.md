@@ -23,7 +23,7 @@ Please cite our papers if you use the model or this code in your own work:
 @inproceedings{klicpera_gemnet_2021,
   title = {GemNet: Universal Directional Graph Neural Networks for Molecules},
   author = {Klicpera, Johannes and Becker, Florian and G{\"u}nnemann, Stephan},
-  booktitle={Advances in Neural Information Processing Systems 35 (2021)},
+  booktitle={Conference on Neural Information Processing Systems (NeurIPS)},
   year = {2021}
 }
 ```
