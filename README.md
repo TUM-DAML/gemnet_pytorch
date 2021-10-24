@@ -1,6 +1,6 @@
 # GemNet: Universal Directional Graph Neural Networks for Molecules
 
-Reference implementation in PyTorch of the GemNet model proposed in the paper:
+Reference implementation in PyTorch of the geometric message passing neural network (GemNet). You can find its [TensorFlow 2 implementation in another repository](https://github.com/TUM-DAML/gemnet_tf). GemNet is a model for predicting the overall energy and the forces acting on the atoms of a molecule. It was proposed in the paper:
 
 **[GemNet: Universal Directional Graph Neural Networks for Molecules](https://www.in.tum.de/daml/gemnet/)**   
 by Johannes Klicpera, Florian Becker, Stephan Günnemann   
