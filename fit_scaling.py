@@ -183,12 +183,12 @@ def run(
 
 if __name__ == "__main__":
 
-    config_path = "/nfs/homedirs/beckerf/gemnet_pytorch/config.yaml"
+    config_path = "config.yaml"
 
     nBatches = 25  ## number of batches to use to fit a single variable
     config = get_configs(config_path)[0]
 
-    config["scale_file"] = "/nfs/homedirs/beckerf/gemnet_torch/scaling_factors.json"
+    config["scale_file"] = "scaling_factors.json"
     config["batch_size"] = 32
     config["direct_forces"] = True
     config["triplets_only"] = False
