@@ -355,13 +355,7 @@ class Trainer:
                 self.model.parameters(), max_norm=self.grad_clip_max
             )
 
-        if self.mixed_precision:
-            for opt in self.optimizers.wrapped:
-                self.scaler.step(opt)
-            self.scaler.update()
-        else:
-            self.optimizers.step()
-
+        self.optimizers.step()
         self.schedulers.step()
         self.exp_decay.update()
 
