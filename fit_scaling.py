@@ -25,29 +25,11 @@ from gemnet.training.data_container import DataContainer
 from gemnet.training.data_provider import DataProvider
 
 import yaml
+import ast
 from tqdm import trange
-from seml.config import generate_configs
 
 from gemnet.model.utils import write_json
 from gemnet.model.layers.scaling import AutomaticFit
-
-
-def get_configs(path):
-    with open(path, "r") as stream:
-        try:
-            all_configs = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-    configs = generate_configs(all_configs)
-    lengths = [len(config) for config in configs]
-    max_length = max(lengths)
-    configs = [config for i, config in enumerate(configs) if lengths[i] >= max_length]
-    out = []
-    for config in configs:
-        if config not in out:
-            out.append(config)
-    return out
-
 
 def run(
     nBatches,
@@ -185,8 +167,18 @@ if __name__ == "__main__":
 
     config_path = "config.yaml"
 
+    with open('config.yaml', 'r') as c:
+        config = yaml.safe_load(c)
+        
+    # For strings that yaml doesn't parse (e.g. None)
+    for key, val in config.items():
+        if type(val) is str:
+            try:
+                config[key] = ast.literal_eval(val)
+            except (ValueError, SyntaxError):
+                pass
+
     nBatches = 25  ## number of batches to use to fit a single variable
-    config = get_configs(config_path)[0]
 
     config["scale_file"] = "scaling_factors.json"
     config["batch_size"] = 32
