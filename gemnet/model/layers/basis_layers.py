@@ -43,9 +43,8 @@ class BesselBasisLayer(torch.nn.Module):
         )
 
     def forward(self, d):
+        d = d[:, None]  # (nEdges,1)
         d_scaled = d * self.inv_cutoff
-        d_scaled = d_scaled[:, None]  # (nEdges,1)
-
         env = self.envelope(d_scaled)
         return env * self.norm_const * torch.sin(self.frequencies * d_scaled) / d
 
