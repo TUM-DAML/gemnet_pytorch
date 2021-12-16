@@ -225,7 +225,7 @@ class DataContainer:
         if isinstance(idx, tuple):
             idx = list(idx)
         if isinstance(idx, slice):
-            idx = np.arange(idx.start, max(idx.stop, len(self)), idx.step)
+            idx = np.arange(idx.start, min(idx.stop, len(self)), idx.step)
 
         data = {}
         if self.addID:
