@@ -85,11 +85,8 @@ class DataProvider:
         if batch_size is None:
             batch_size = self.batch_size
         shuffle = self.shuffle if split == "train" else False
-        if shuffle:
-            generator = torch.Generator()
-            generator.manual_seed(self.seed)
-        else:
-            generator = None
+        generator = torch.Generator()
+        generator.manual_seed(self.seed)
 
         dataloader = DataLoader(
             Subset(self.data_container, self.idx[split]),
