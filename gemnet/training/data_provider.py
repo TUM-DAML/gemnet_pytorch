@@ -1,5 +1,6 @@
 import functools
 import numpy as np
+import torch
 from torch.utils.data import DataLoader, Subset
 
 
@@ -84,11 +85,17 @@ class DataProvider:
         if batch_size is None:
             batch_size = self.batch_size
         shuffle = self.shuffle if split == "train" else False
+        if shuffle:
+            generator = torch.Generator()
+            generator.manual_seed(self.seed)
+        else:
+            generator = None
 
         dataloader = DataLoader(
             Subset(self.data_container, self.idx[split]),
             batch_size=batch_size,
             shuffle=shuffle,
+            generator=generator,
             collate_fn=functools.partial(collate, target_keys=data_container.targets),
             pin_memory=True,  # load on CPU, push to GPU
             **self.kwargs
