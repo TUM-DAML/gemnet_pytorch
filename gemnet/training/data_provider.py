@@ -1,12 +1,6 @@
 import functools
 import numpy as np
-import torch
 from torch.utils.data import DataLoader, Subset
-from torch.utils.data.sampler import (
-    BatchSampler,
-    SubsetRandomSampler,
-    SequentialSampler,
-)
 
 
 def collate(batch, target_keys):
