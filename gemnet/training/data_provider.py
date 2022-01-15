@@ -1,3 +1,4 @@
+import functools
 import numpy as np
 import torch
 from torch.utils.data import DataLoader, Subset
@@ -8,7 +9,7 @@ from torch.utils.data.sampler import (
 )
 
 
-def collate(batch, data_container):
+def collate(batch, target_keys):
     """
     custom batching function because batches have variable shape
     """
@@ -16,37 +17,11 @@ def collate(batch, data_container):
     inputs = {}
     targets = {}
     for key in batch:
-        if key in data_container.targets:
+        if key in target_keys:
             targets[key] = batch[key]
         else:
             inputs[key] = batch[key]
     return inputs, targets
-
-
-class CustomDataLoader(DataLoader):
-    def __init__(
-        self, data_container, batch_size, indices, shuffle, seed=None, **kwargs
-    ):
-
-        if shuffle:
-            generator = torch.Generator()
-            if seed is not None:
-                generator.manual_seed(seed)
-            idx_sampler = SubsetRandomSampler(indices, generator)
-        else:
-            idx_sampler = SequentialSampler(Subset(data_container, indices))
-
-        batch_sampler = BatchSampler(
-            idx_sampler, batch_size=batch_size, drop_last=False
-        )
-
-        super().__init__(
-            data_container,
-            sampler=batch_sampler,
-            collate_fn=lambda x: collate(x, data_container),
-            pin_memory=True,  # load on CPU push to GPU
-            **kwargs
-        )
 
 
 class DataProvider:
@@ -116,11 +91,12 @@ class DataProvider:
             batch_size = self.batch_size
         shuffle = self.shuffle if split == "train" else False
 
-        dataloader = CustomDataLoader(
-            self.data_container,
+        dataloader = DataLoader(
+            Subset(self.data_container, self.idx[split]),
             batch_size=batch_size,
-            indices=self.idx[split],
             shuffle=shuffle,
+            collate_fn=functools.partial(collate, target_keys=data_container.targets),
+            pin_memory=True,  # load on CPU, push to GPU
             **self.kwargs
         )
 
