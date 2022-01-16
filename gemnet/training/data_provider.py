@@ -2,13 +2,17 @@ import functools
 import numpy as np
 import torch
 from torch.utils.data import DataLoader, Subset
-
+from torch.utils.data.sampler import (
+    BatchSampler,
+    SubsetRandomSampler,
+    SequentialSampler,
+)
 
 def collate(batch, target_keys):
     """
     custom batching function because batches have variable shape
     """
-    batch = batch[0]  # already batched
+    batch = batch[0]  # already batched: Batching happens in DataContainer
     inputs = {}
     targets = {}
     for key in batch:
@@ -17,7 +21,6 @@ def collate(batch, target_keys):
         else:
             inputs[key] = batch[key]
     return inputs, targets
-
 
 class DataProvider:
     """
@@ -85,16 +88,28 @@ class DataProvider:
         if batch_size is None:
             batch_size = self.batch_size
         shuffle = self.shuffle if split == "train" else False
-        generator = torch.Generator()
-        generator.manual_seed(self.seed)
+
+        indices = self.idx[split]
+        if shuffle:
+            torch_generator = torch.Generator()
+            if self.seed is not None:
+                torch_generator.manual_seed(self.seed)
+            idx_sampler = SubsetRandomSampler(indices, torch_generator)
+            dataset = self.data_container 
+        else:
+            subset = Subset(self.data_container, indices)
+            idx_sampler = SequentialSampler(subset)
+            dataset = subset 
+
+        batch_sampler = BatchSampler(
+            idx_sampler, batch_size=batch_size, drop_last=False
+        )
 
         dataloader = DataLoader(
-            Subset(self.data_container, self.idx[split]),
-            batch_size=batch_size,
-            shuffle=shuffle,
-            generator=generator,
-            collate_fn=functools.partial(collate, target_keys=data_container.targets),
-            pin_memory=True,  # load on CPU, push to GPU
+            dataset,
+            sampler=batch_sampler,
+            collate_fn=functools.partial(collate, target_keys=self.data_container.targets),
+            pin_memory=True,  # load on CPU push to GPU
             **self.kwargs
         )
 
