@@ -451,12 +451,8 @@ class Trainer:
                 )
 
             else:
-                if self.loss == "mae":
-                    force_metric = self.get_mae(targets["F"], mean_forces)
-                else:
-                    force_metric = self.get_rmse(targets["F"], mean_forces)
-
-                loss = energy_mae * (1 - self.rho_force) + self.rho_force * force_metric
+                force_metric = force_mae if self.loss == "mae" else force_rmse
+                loss = (1 - self.rho_force) * energy_mae + self.rho_force * force_metric
 
                 # update molecule metrics
                 metrics.update_state(
