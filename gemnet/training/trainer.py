@@ -285,9 +285,9 @@ class Trainer:
 
     def get_rmse(self, targets, pred):
         """
-        Root Mean Squared Error
+        Mean L2 Error
         """
-        return torch.sqrt(torch.nn.functional.mse_loss(pred, targets, reduction="mean"))
+        return torch.mean(torch.norm((pred - targets), p=2, dim=1))
 
     def get_nll(self, targets, mean_pred, var_pred):
         return torch.nn.functional.gaussian_nll_loss(
