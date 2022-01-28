@@ -285,9 +285,9 @@ class Trainer:
 
     def get_rmse(self, targets, pred):
         """
-        Root Mean Squared Error
+        Mean L2 Error
         """
-        return torch.sqrt(torch.nn.functional.mse_loss(pred, targets, reduction="mean"))
+        return torch.mean(torch.norm((pred - targets), p=2, dim=1))
 
     def get_nll(self, targets, mean_pred, var_pred):
         return torch.nn.functional.gaussian_nll_loss(
@@ -451,12 +451,8 @@ class Trainer:
                 )
 
             else:
-                if self.loss == "mae":
-                    force_metric = self.get_mae(targets["F"], mean_forces)
-                else:
-                    force_metric = self.get_rmse(targets["F"], mean_forces)
-
-                loss = energy_mae * (1 - self.rho_force) + self.rho_force * force_metric
+                force_metric = force_mae if self.loss == "mae" else force_rmse
+                loss = (1 - self.rho_force) * energy_mae + self.rho_force * force_metric
 
                 # update molecule metrics
                 metrics.update_state(
