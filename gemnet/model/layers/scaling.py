@@ -76,7 +76,7 @@ class AutomaticFit:
             )
         else:
             self._fitted = True
-            logging.info(f"Set scale factor {self._name} : {value}")
+            logging.debug(f"Set scale factor {self._name} : {value}")
             with torch.no_grad():
                 self.variable.copy_(torch.tensor(value))
 
