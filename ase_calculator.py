@@ -188,6 +188,8 @@ class MDSimulator:
         Integration time step for Newton's law in femtoseconds.
     temperature: float
         The temperature in Kelvin.
+    langevin_friction: float
+        Only used when dynamics are 'langevin'. A friction coefficient, typically 1e-4 to 1e-2.
     interval: int
         Write only every <interval> time step to trajectory file.
     traj_path: str
@@ -206,6 +208,7 @@ class MDSimulator:
         max_steps: int = 100,  # max_steps * time is total time length of trajectory
         time: float = 0.5,  # in fs
         temperature: float = 300,  # in K
+        langevin_friction: float = 0.002,
         interval: int = 10,
         traj_path="md_sim.traj",
         vel=None,
@@ -248,7 +251,7 @@ class MDSimulator:
                 timestep=time * units.fs,
                 temperature=temperature * units.kB,  # kB: Boltzmann constant, eV/K
                 # temperature_K = temperature,           # only works in newer ase versions
-                friction=0.002,
+                friction=langevin_friction,
             )
         else:
             raise UserWarning(
