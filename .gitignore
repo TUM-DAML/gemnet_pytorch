@@ -11,5 +11,4 @@ __pycache__
 # pytest
 .pytest_cache
 
-pretrained/
 *.traj
