@@ -8,7 +8,7 @@ Published at NeurIPS 2021.
 
 ## Run the code
 Adjust config.yaml (or config_seml.yaml) to your needs.
-This repository contains notebooks for training the model (`train.ipynb`) and for generating predictions on a molecule loaded from [ASE](https://wiki.fysik.dtu.dk/ase/) (`predict.ipynb`). It also contains a script for training the model on a cluster with Sacred and [SEML](https://github.com/TUM-DAML/seml) (`train_seml.py`). Further, a notebook is provided to show how GemNet can be used for MD simulations (ase_example.ipynb).
+This repository contains notebooks for training the model (`train.ipynb`) and for generating predictions on a molecule loaded from [ASE](https://wiki.fysik.dtu.dk/ase/) (`predict.ipynb`). It also contains a script for training the model on a cluster with Sacred and [SEML](https://github.com/TUM-DAML/seml) (`train_seml.py`). Further, a notebook is provided to show how GemNet can be used for MD simulations (`ase_example.ipynb`).
 
 ## Compute scaling factors
 You can either use the precomputed scaling_factors (in scaling_factors.json) or compute them yourself by running fit_scaling.py. Scaling factors are used to ensure a consistent scale of activations at initialization. They are the same for all GemNet variants.
