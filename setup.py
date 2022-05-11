@@ -9,7 +9,7 @@ setup(
     description="GemNet: Universal Directional Graph Neural Networks for Molecules",
     author="Johannes Gasteiger, Florian Becker, Stephan Günnemann",
     author_email="j.gasteiger@in.tum.de",
-    packages=["gemnet_pytorch"],
+    packages=["gemnet"],
     install_requires=install_requires,
     zip_safe=False,
 )

@@ -5,10 +5,6 @@ tqdm
 ase
 nglview
 numba
-python==3.8
 jupyterlab
-pytorch==1.10
 torchvision 
 torchaudio 
-cudatoolkit=11.3
-pytorch-geometric
