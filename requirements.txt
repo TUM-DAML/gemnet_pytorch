@@ -6,5 +6,5 @@ ase
 nglview
 numba
 jupyterlab
-torchvision 
-torchaudio 
+torch==1.10
+torch-scatter
