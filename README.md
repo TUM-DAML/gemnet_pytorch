@@ -8,9 +8,9 @@ Published at NeurIPS 2021
 
 and further analyzed in
 
-**[How Robust are Modern Graph Neural Network Potentials in Long and Hot Molecular Dynamics Simulations?](https://www.in.tum.de/daml/gemnet/)**  
+**[How robust are modern graph neural network potentials in long and hot molecular dynamics simulations?](https://www.in.tum.de/daml/gemnet/)**  
 by Sina Stocker\*, Johannes Gasteiger\*, Florian Becker, Stephan Günnemann and Johannes T. Margraf  
-2022
+Published in Machine Learning: Science and Technology, 2022
 
 \*Both authors contributed equally to this research. Note that the author's name has changed from Johannes Klicpera to Johannes Gasteiger.
 
@@ -37,9 +37,14 @@ Please cite our papers if you use the model or this code in your own work:
 ```
 
 ```
-@article{stocker_gnn_2022,
-title = {How Robust are Modern Graph Neural Network Potentials in Long and Hot Molecular Dynamics Simulations?},
-author = {Stocker, Sina and Gasteiger, Johannes and Becker, Florian and G{\"u}nnemann, Stephan and Margraf, Johannes T.},
-year = {2022}
+@article{stocker_robust_2022,
+  title = {How robust are modern graph neural network potentials in long and hot molecular dynamics simulations?},
+  author = {Stocker, Sina and Gasteiger, Johannes and Becker, Florian and G{\"u}nnemann, Stephan and Margraf, Johannes T.},
+	volume = {3},
+	doi = {10.1088/2632-2153/ac9955},
+	number = {4},
+	journal = {Machine Learning: Science and Technology},
+	year = {2022},
+	pages = {045010},
 }
 ```
